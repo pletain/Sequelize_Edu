@@ -1,9 +1,14 @@
 const models = require('../../models');
 
 exports.get_products = ( _ , res) => {
-    res.render( 'admin/products.html' , 
-        { message : "hello" } // message 란 변수를 템플릿으로 내보낸다.
-    );
+    // res.render( 'admin/products.html' , 
+    //     { message : "hello" } // message 란 변수를 템플릿으로 내보낸다.
+    // );
+	models.Products.findall({
+		
+	}).then((productList) => { //변수 선언
+		res.render('admin/products.html', {productList: productList}) //이제 products.html에 반복문을 뿌려주자
+	})
 }
 
 exports.post_products_write = ( req , res ) => {
@@ -16,11 +21,6 @@ exports.post_products_write = ( req , res ) => {
     });
 	
 	
-	   models.Products.create(req.body).then( () => { //callback 함수 처리
-        models.Products.create(req.body).then( () => { //callback 함수 처리
-			res.redirect('/admin/products'); // sequelize로 저장 후, 다시 main 페이지로 redirect 시켜준다.
-    });
-    });
 }
 
  
